@@ -1,28 +1,42 @@
 const gestionDeTienda = {
-    productos: [
-        { nombre: "frutas", precio: 2500, cantidad: 10 }
-    ],
-
-    agregarProducto(nom, pre, cant) {
-        this.productos.push({ nombre: nom, precio: pre, cantidad: cant });
+    inventario: {
+        frutas: [
+            { nombre: "manzana", precio: 1500, cantidad: 20 },
+            { nombre: "plátano", precio: 1000, cantidad: 30 }
+            // ... más frutas aquí
+        ],
+        // ... otras categorías de productos (verduras, lácteos, etc.)
     },
 
-    actualizarCantidad(nom, nuevaCant) {
-        for (let i = 0; i < this.productos.length; i++) {
-            if (this.productos[i].nombre === nom) {
-                this.productos[i].cantidad = nuevaCant;
+    agregarFruta(nom, pre, cant) {
+        this.inventario.frutas.push({ nombre: nom, precio: pre, cantidad: cant });
+    },
+
+    eliminarFruta(nom) {
+        this.inventario.frutas = this.inventario.frutas.filter(fruta => fruta.nombre !== nom);
+    },
+
+    actualizarCantidadFruta(nom, nuevaCant) {
+        for (let i = 0; i < this.inventario.frutas.length; i++) {
+            if (this.inventario.frutas[i].nombre === nom) {
+                this.inventario.frutas[i].cantidad = nuevaCant;
                 return;
             }
         }
+        console.log(`No se encontró la fruta ${nom} en el inventario.`);
     },
 
-    mostrarProductos() {  
-        console.log(this.productos);
+    mostrarInventarioFrutas() {
+        console.log("Inventario de Frutas:");
+        this.inventario.frutas.forEach(fruta => {
+            console.log(`${fruta.nombre}: Precio - ${fruta.precio}, Cantidad - ${fruta.cantidad}`);
+        });
     }
 };
 
-
-gestionDeTienda.agregarProducto("manzana", 1500, 20);
-gestionDeTienda.actualizarCantidad("frutas", 30);
-gestionDeTienda.mostrarProductos();
+// **Ejemplos de uso**
+gestionDeTienda.agregarFruta("naranja", 1200, 25);
+gestionDeTienda.eliminarFruta("plátano");
+gestionDeTienda.actualizarCantidadFruta("manzana", 25);
+gestionDeTienda.mostrarInventarioFrutas();
 
